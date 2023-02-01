@@ -1,0 +1,1 @@
+class TodoNotFoundException implements Exception {}
