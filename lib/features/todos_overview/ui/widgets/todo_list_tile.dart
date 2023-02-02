@@ -26,7 +26,6 @@ class TodoListTile extends StatelessWidget {
     return BlocBuilder<TodosOverviewBloc, TodosOverviewState>(
       builder: (context, state) {
         final selectedDate = state.selectedDate ?? DateTime.now();
-        print('$selectedDate in list');
         final bool dailyRepeat = (todo.repeat == RepeatStatus.daily);
         final bool weaklyRepeat = (todo.repeat == RepeatStatus.weakly &&
             selectedDate.difference(DateFormat.yMd().parse(todo.date)).inDays %
@@ -128,6 +127,6 @@ class TodoListTile extends StatelessWidget {
       default:
         return bluishColor;
     }
-    ;
+    
   }
 }

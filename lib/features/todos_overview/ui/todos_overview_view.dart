@@ -22,13 +22,13 @@ class TodosOverviewPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => instanceGetIt<TodosOverviewBloc>()
         ..add(const TodosOverviewSubscriptionRequested()),
-      child: TodosOverviewView(),
+      child: const TodosOverviewView(),
     );
   }
 }
 
 class TodosOverviewView extends StatelessWidget {
-  TodosOverviewView({super.key});
+  const TodosOverviewView({super.key});
 
 
 
@@ -111,7 +111,7 @@ class TodosOverviewView extends StatelessWidget {
                       NoTaskAdded(),
                     ],
                   );
-                  ;
+                  
                 }
               }
               return ListView(

@@ -64,6 +64,7 @@ class EditTodoState extends Equatable {
 
   @override
   List<Object?> get props => [
+        status,
         initialTodo,
         title,
         description,

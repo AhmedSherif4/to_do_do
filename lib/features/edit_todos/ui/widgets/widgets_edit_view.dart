@@ -14,7 +14,7 @@ class TitleField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EditTodoState state = context.watch<EditTodoBloc>().state;
+    final EditTodoState state = context.read<EditTodoBloc>().state;
     final String hintText = state.initialTodo?.title ?? '';
 
     return TextFormField(
@@ -30,10 +30,8 @@ class TitleField extends StatelessWidget {
         LengthLimitingTextInputFormatter(50),
         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9\s]')),
       ],
-      onFieldSubmitted: (value) => context.read<EditTodoBloc>().add(EditTodoTitleChanged(value)),
-      /* onChanged: (value) {
-        context.read<EditTodoBloc>().add(EditTodoTitleChanged(value));
-      }, */
+      onFieldSubmitted: (value) =>
+          context.read<EditTodoBloc>().add(EditTodoTitleChanged(value)),
     );
   }
 }
@@ -43,7 +41,7 @@ class DescriptionField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EditTodoState state = context.watch<EditTodoBloc>().state;
+    final EditTodoState state = context.read<EditTodoBloc>().state;
     final String hintText = state.initialTodo?.description ?? '';
 
     return TextFormField(
@@ -59,22 +57,18 @@ class DescriptionField extends StatelessWidget {
       inputFormatters: [
         LengthLimitingTextInputFormatter(300),
       ],
-      onChanged: (value) {
-        context.read<EditTodoBloc>().add(EditTodoDescriptionChanged(value));
-      },
+      onFieldSubmitted: (value) =>
+          context.read<EditTodoBloc>().add(EditTodoDescriptionChanged(value)),
     );
   }
 }
 
 class DateField extends StatelessWidget {
-  DateField({super.key});
+  const DateField({super.key});
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    final EditTodoState state = context.watch<EditTodoBloc>().state;
-    final String formDate =
-        state.date ?? DateFormat.yMd().format(DateTime.now());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,14 +93,8 @@ class DateField extends StatelessWidget {
                           DateTime.now().subtract(const Duration(days: 365)),
                       lastDate: DateTime.now().add(const Duration(days: 365)))
                   .then((value) {
-                if (value != null) {
-                  BlocProvider.of<EditTodoBloc>(context)
-                      .add(EditTodoDateChanged(DateFormat.yMd().format(value)));
-                } else {
-                  context
-                      .read<EditTodoBloc>()
-                      .add(EditTodoDateChanged(formDate));
-                }
+                BlocProvider.of<EditTodoBloc>(context).add(EditTodoDateChanged(
+                    DateFormat.yMd().format(value ?? DateTime.now())));
                 return value;
               });
             },
@@ -117,7 +105,7 @@ class DateField extends StatelessWidget {
                     child: BlocBuilder<EditTodoBloc, EditTodoState>(
                       builder: (context, state) {
                         return Text(
-                          state.date ?? formDate,
+                          state.date ?? DateFormat.yMd().format(DateTime.now()),
                           style: Theme.of(context).textTheme.titleMedium,
                         );
                       },
@@ -138,17 +126,17 @@ class DateField extends StatelessWidget {
 class StartEndTimeDateField extends StatelessWidget {
   final bool isEndTime;
   StartEndTimeDateField({super.key, required this.isEndTime});
-  final String _startTime = DateFormat('hh:mm a').format(DateTime.now());
+/*   final String _startTime = DateFormat('hh:mm a').format(DateTime.now());
   final String _endTime = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(minutes: 15)))
-      .toString();
+      .toString(); */
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    final EditTodoState state = context.watch<EditTodoBloc>().state;
+/*     final EditTodoState state = context.watch<EditTodoBloc>().state;
     final formStartTime = state.startTime ?? _startTime;
-    final formEndTime = state.endTime ?? _endTime;
+    final formEndTime = state.endTime ?? _endTime; */
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -168,7 +156,7 @@ class StartEndTimeDateField extends StatelessWidget {
             onTap:
                 //end Time Logic
                 () async {
-              TimeOfDay? _pickedTime = await showTimePicker(
+              TimeOfDay? pickedTime = await showTimePicker(
                 initialEntryMode: TimePickerEntryMode.dial,
                 context: context,
                 initialTime: isEndTime
@@ -178,14 +166,12 @@ class StartEndTimeDateField extends StatelessWidget {
               ).then((value) {
                 if (isEndTime) {
                   // end Time
-                  BlocProvider.of<EditTodoBloc>(context).add(
-                      EditTodoEndTimeChanged(
-                          value?.format(context) ?? formEndTime));
+                  BlocProvider.of<EditTodoBloc>(context)
+                      .add(EditTodoEndTimeChanged(value?.format(context)));
                 } else {
                   // start Time
-                  BlocProvider.of<EditTodoBloc>(context).add(
-                      EditTodoStartTimeChanged(
-                          value?.format(context) ?? formStartTime));
+                  BlocProvider.of<EditTodoBloc>(context)
+                      .add(EditTodoStartTimeChanged(value?.format(context)));
                 }
                 return value;
               });
@@ -201,8 +187,11 @@ class StartEndTimeDateField extends StatelessWidget {
                     child: BlocBuilder<EditTodoBloc, EditTodoState>(
                       builder: (context, state) {
                         return Text(isEndTime
-                            ? state.endTime ?? formEndTime
-                            : state.startTime ?? formStartTime);
+                            ? state.endTime ??
+                                DateFormat('hh:mm a').format(DateTime.now())
+                            : state.startTime ??
+                                DateFormat('hh:mm a').format(DateTime.now()
+                                    .add(const Duration(minutes: 15))));
                       },
                     ),
                   ),
@@ -342,8 +331,6 @@ class ColorOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EditTodoState state = context.watch<EditTodoBloc>().state;
-    final int formColor = state.initialTodo?.color ?? 0;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

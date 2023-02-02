@@ -96,6 +96,5 @@ class TodosOverviewBloc extends Bloc<TodosOverviewEvent, TodosOverviewState> {
       TodosOverviewSelectDate event, Emitter<TodosOverviewState> emit) {
     emit(state.copyWith(
         selectedDate: () => event.selectedDate ?? DateTime.now()));
-    print(state.selectedDate);
   }
 }

@@ -4,7 +4,7 @@ abstract class EditTodoEvent extends Equatable {
   const EditTodoEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class EditTodoTitleChanged extends EditTodoEvent {
@@ -37,19 +37,19 @@ class EditTodoDateChanged extends EditTodoEvent {
 class EditTodoStartTimeChanged extends EditTodoEvent {
   const EditTodoStartTimeChanged(this.startTime);
 
-  final String startTime;
+  final String? startTime;
 
   @override
-  List<Object> get props => [startTime];
+  List<Object?> get props => [startTime];
 }
 
 class EditTodoEndTimeChanged extends EditTodoEvent {
   const EditTodoEndTimeChanged(this.endTime);
 
-  final String endTime;
+  final String? endTime;
 
   @override
-  List<Object> get props => [endTime];
+  List<Object?> get props => [endTime];
 }
 
 class EditTodoColorChanged extends EditTodoEvent {

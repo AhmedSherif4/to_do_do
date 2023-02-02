@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../controller/cubit/home_cubit.dart';
 
 class HomeTabButton extends StatelessWidget {
-  const HomeTabButton({
+  const HomeTabButton({super.key, 
     required this.groupValue,
     required this.value,
     required this.icon,

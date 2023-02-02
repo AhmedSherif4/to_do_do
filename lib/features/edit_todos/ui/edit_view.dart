@@ -29,10 +29,6 @@ class EditView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-/*     final status = context.select((EditTodoBloc bloc) => bloc.state.status);
-    final isNewTodo = context.select(
-      (EditTodoBloc bloc) => bloc.state.isNewTodo,
-    ); */
     final isNewTodo = context.read<EditTodoBloc>().state.initialTodo == null;
     return Scaffold(
       appBar: AppBar(
@@ -42,8 +38,6 @@ class EditView extends StatelessWidget {
       ),
       body: BlocListener<EditTodoBloc, EditTodoState>(
         listener: (context, state) {
-          print('UI test --------- ${state.status}');
-
           if (state.status == EditTodoStatus.success) {
             Navigator.pop(context);
           }
@@ -54,7 +48,7 @@ class EditView extends StatelessWidget {
             children: [
               const TitleField(),
               const DescriptionField(),
-              DateField(),
+              const DateField(),
               Row(
                 children: [
                   Expanded(child: StartEndTimeDateField(isEndTime: false)),

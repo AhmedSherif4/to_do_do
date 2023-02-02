@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,22 +92,14 @@ class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
 
     try {
       await _todosRepository.saveTodo(todo);
-      print('before: ${state.status}');
       final stateTi = state.copyWith(status: EditTodoStatus.success);
-      print(stateTi);
       emit(stateTi);
-      print('after: ${stateTi.status}');
     } catch (e) {
       emit(state.copyWith(status: EditTodoStatus.failure));
     }
   }
 
-  @override
-  void onTransition(Transition<EditTodoEvent, EditTodoState> transition) {
-    super.onTransition(transition);
-    print(
-        '${transition.currentState} //////// ${transition.nextState} //////// ${transition.event}');
-  }
+
 }
 
 

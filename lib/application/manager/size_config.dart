@@ -10,7 +10,6 @@ class SizeConfig {
   void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
-    print('$screenWidth');
     screenHeight = _mediaQueryData.size.height;
     orientation = _mediaQueryData.orientation;
   }
