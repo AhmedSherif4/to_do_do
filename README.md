@@ -1,7 +1,7 @@
 # To Do Do
 
-A To-do project with Dart/Light mode, for making Todo with Title and Description, also can make the Todo daily, weekly, and monthly repeat. and change the color of Todo, There's a Complete/unComplete option, and select all as complete.
-There is also a page for counting the Todos which is completed and which are not.
+A To-do project with Dart/Light mode, for making Todo with a Title and Description, also can make the Todo daily, weekly, and monthly repeat. and change the color of Todo, There's a Complete/unComplete option, and select all as complete. 
+There is also a page for counting the Todos which is completed and which is not.
 
 ### using:
 #### BLoC pattern, Clean Architecture, Dart/Light mode and Material Design 3, Local database "Shared preference"
